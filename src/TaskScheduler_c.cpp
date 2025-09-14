@@ -58,7 +58,7 @@ struct enkiTaskSet : ITaskSet
 
     void ExecuteRange( TaskSetPartition range_, uint32_t threadnum_  ) override
     {
-        taskFun( range_.start, range_.end, threadnum_, pArgs );
+        taskFun( (int)range_.start, (int)range_.end, threadnum_, pArgs );
     }
 
     enkiTaskExecuteRange taskFun;
@@ -239,6 +239,7 @@ enkiParamsTaskSet enkiGetParamsTaskSet( enkiTaskSet* pTaskSet_ )
     paramsTaskSet.setSize  = pTaskSet_->m_SetSize;
     paramsTaskSet.minRange = pTaskSet_->m_MinRange;
     paramsTaskSet.priority = pTaskSet_->m_Priority;
+    paramsTaskSet.taskFunc = pTaskSet_->taskFun;
     return paramsTaskSet;
 }
 
@@ -248,6 +249,7 @@ void enkiSetParamsTaskSet( enkiTaskSet* pTaskSet_, enkiParamsTaskSet params_ )
     pTaskSet_->pArgs      = params_.pArgs;
     pTaskSet_->m_SetSize  = params_.setSize;
     pTaskSet_->m_MinRange = params_.minRange;
+    pTaskSet_->taskFun = params_.taskFunc;
     pTaskSet_->m_Priority = TaskPriority( params_.priority );
 }
 

@@ -55,7 +55,7 @@ typedef struct enkiCompletionAction enkiCompletionAction;
 
 static const uint32_t ENKI_NO_THREAD_NUM = 0xFFFFFFFF;
 
-typedef void (* enkiTaskExecuteRange)( uint32_t start_, uint32_t end_, uint32_t threadnum_, void* pArgs_ );
+typedef void (* enkiTaskExecuteRange)( int start_, int end_, uint32_t threadnum_, void* pArgs_ );
 typedef void (* enkiPinnedTaskExecute)( void* pArgs_ );
 typedef void (* enkiCompletionFunction)( void* pArgs_, uint32_t threadNum_ );
 
@@ -87,10 +87,11 @@ struct enkiCustomAllocator
 
 struct enkiParamsTaskSet
 {
-    void*    pArgs;
-    uint32_t setSize;
-    uint32_t minRange;
-    int      priority;
+    enkiTaskExecuteRange    taskFunc;
+    void*                   pArgs;
+    uint32_t                setSize;
+    uint32_t                minRange;
+    int                     priority;
 };
 
 struct enkiParamsPinnedTask
